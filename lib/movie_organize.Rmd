@@ -1,0 +1,75 @@
+---
+title: "movie data"
+output: html_document
+---
+
+#transform movie train data
+```{r}
+df <- read.csv("data_train.csv")
+df <- df[,-1]
+
+#df <- df[1:500,]
+
+user <- unique(df$User)
+movie <- unique(df$Movie)
+m <- matrix(NA,nrow = length(user),ncol = length(movie))
+
+rownames(m) <- user
+colnames(m) <- movie
+
+m <- data.frame(m)
+```
+
+```{r}
+#for(i in 275:length(user)){
+for(i in 1501:1600){
+  for(j in 1:length(movie)){
+    if(identical(df[df$User == user[i] & df$Movie == movie[j],3],
+                 integer(0)) == TRUE){
+      m[i,j] <- NA
+      }
+    else{
+      m[i,j] <- df[df$User == user[i] & df$Movie == movie[j],3]
+      }
+  }
+}
+
+write(m,"movie_train.csv")
+```
+
+
+
+
+
+
+#transform movie test data
+```{r}
+df <- read.csv("data_test.csv")
+df <- df[,-1]
+
+user <- unique(df$User)
+movie <- unique(df$Movie)
+m <- matrix(NA,nrow = length(user),ncol = length(movie))
+
+rownames(m) <- user
+colnames(m) <- movie
+
+m <- data.frame(m)
+```
+
+```{r}
+#for(i in 275:length(user)){
+for(i in 1501:1600){
+  for(j in 1:length(movie)){
+    if(identical(df[df$User == user[i] & df$Movie == movie[j],3],
+                 integer(0)) == TRUE){
+      m[i,j] <- NA
+      }
+    else{
+      m[i,j] <- df[df$User == user[i] & df$Movie == movie[j],3]
+      }
+  }
+}
+
+write(m,"movie_test.csv")
+```
