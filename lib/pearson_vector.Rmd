@@ -1,0 +1,67 @@
+---
+title: "pearson and vector"
+output: html_document
+---
+
+#this R markdown is for similarity weight
+
+```{r}
+library("lsa")
+```
+
+
+#(1) pearson correlation
+
+#MS_train
+```{r}
+ms_train <- read.csv("C:/Users/ding/Documents/GitHub/Spring2018-Project4-grp7/data/ms_train.csv")
+ms_train <- ms_train[,-1]
+simi <- cor(t(ms_train),use = "pairwise.complete.obs",method = "pearson")
+simi <- round(simi,4)
+simi[is.na(simi)] <- 0
+ms_train_pearson <- simi
+save(ms_train_pearson,file = "ms_train_pearson.RData")
+```
+
+#movie_train
+```{r}
+movie_train <- read.csv("C:/Users/ding/Documents/GitHub/Spring2018-Project4-grp7/data/movie_train.csv")
+movie_train <- movie_train[,-1]
+simi <- cor(t(movie_train),use = "pairwise.complete.obs",method = "pearson")
+simi <- round(simi,4)
+simi[is.na(simi)] <- 0
+movie_train_pearson <- simi
+save(movie_train_pearson,file = "movie_train_pearson.RData")
+```
+
+
+
+
+
+
+#(2) vector similarity
+
+#MS_train
+```{r}
+ms_train <- read.csv("C:/Users/ding/Documents/GitHub/Spring2018-Project4-grp7/data/ms_train.csv")
+ms_train <- ms_train[,-1]
+ms_train <- as.matrix(ms_train)
+simi <- cosine(t(ms_train))
+simi <- round(simi,4)
+simi[is.na(simi)] <- 0
+ms_train_vector <- simi
+save(ms_train_vector,file = "ms_train_vector.RData")
+```
+
+#movie_train
+```{r}
+movie_train <- read.csv("C:/Users/ding/Documents/GitHub/Spring2018-Project4-grp7/data/movie_train.csv")
+movie_train <- movie_train[,-1]
+movie_train <- as.matrix(movie_train)
+movie_train[is.na(movie_train)] <- 0
+simi <- cosine(t(movie_train))
+simi <- round(simi,4)
+movie_train_vector <- simi
+save(movie_train_vector,file = "movie_train_vector.RData")
+```
+
