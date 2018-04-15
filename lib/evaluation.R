@@ -1,5 +1,6 @@
 ## MAE
-test <- read.csv("../../data/movie_test.csv")
+test <- read.csv("../data/movie_test.csv")
+setwd("~/GitHub/Spring2018-Project4-grp7/output/memory_based_predict/movie")
 load("movie_pearson_threshold.Rdata")
 pred_pear <- movie_pearson_threshold
 load("movie_vector_threshold.Rdata")
@@ -27,7 +28,7 @@ idx2 <- which(is.na(test_v)==T)
 idx <- union(idx1,idx2)
 pred_pear_v <- pred_pear_v[setdiff(1:length(test_v),idx)]
 test_v <- test_v[setdiff(1:length(test_v),idx)]
-roc_pear <- roc(test_v>=4,as.numeric(pred_pear_v>=4))
+roc_pear <- roc(test_v,as.numeric(pred_pear_v))
 plot(roc_pear)
 roc_pear$auc
 roc_pear
