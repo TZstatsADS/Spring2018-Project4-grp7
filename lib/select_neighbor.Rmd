@@ -1,0 +1,41 @@
+---
+title: "select_neighborhood"
+output: html_document
+---
+
+#(1) weight threshold function
+```{r}
+weight_thre <- function(data,p = 0.5){
+  neigh <- list()
+  for(i in 1:nrow(data)){
+    index <- which(data[i,] != 1 & abs(data[i,]) > p)
+    neigh[[i]] <- index
+  }
+  return(neigh)
+}
+```
+
+#(2) best n estimator
+```{r}
+weight_bestn <- function(data,n = 30){
+  neigh <- list()
+  for(i in 1:nrow(data)){
+    index <- order(abs(data[i,]),decreasing = TRUE)
+    index <- index[2:(n+1)]
+    neigh[[i]] <- index
+  }
+  return(neigh)
+}
+```
+
+#(3) combine
+```{r}
+weight_comb <- function(data,p = 0.5,n = 15){
+  neigh <- list()
+  neigh1 <- weight_thre(data = data,p = p)
+  neigh2 <- weight_bestn(data = data,n = n)
+  neigh <- mapply(intersect,neigh1,neigh2)
+  return(neigh)  
+}
+```
+
