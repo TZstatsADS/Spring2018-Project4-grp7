@@ -1,0 +1,40 @@
+---
+title: "movie predict"
+output: html_document
+---
+
+#movie predict
+```{r}
+#movie_train <- read.csv("C:/Users/ding/Documents/GitHub/Spring2018-Project4-grp7/data/movie_train.csv")
+#movie_test <- read.csv("C:/Users/ding/Documents/GitHub/Spring2018-Project4-grp7/data/movie_test.csv")
+
+movie_predict <- function(train = movie_train[,-1],
+                          test = movie_test[,-1],
+                          similarity = data,
+                          neigh = neighborhood){
+  pred <- matrix(NA,nrow = nrow(test),ncol = ncol(test))
+  avg <- apply(train,1,mean,na.rm = TRUE)
+  for(i in 1:nrow(pred)){
+    #predict for user i should be 'part1 + part2/part3'
+    pred.col <- which(!is.na(test[i,]))
+    part1 <- rep(avg[i],length(pred.col))
+  
+    index <- neigh[[i]]
+    weight <- similarity[i,index]
+    part3 <- sum(weight)
+  
+    others <- train[index,pred.col]
+    others2 <- sweep(others,1,avg[index],'-') #this calculate user_i - his owen mean
+    others2[is.na(others2)] <- 0
+    part2 <- t(as.matrix(weight)) %*% as.matrix(others2)
+    if(length(index) == 0){
+      pred[i,pred.col] <- part1
+    }
+    else{
+      pred[i,pred.col] <- part1 + part2[1,]/part3
+    }
+    }
+  return(pred)
+  }
+```
+
