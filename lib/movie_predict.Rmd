@@ -36,5 +36,6 @@ movie_predict <- function(train = movie_train[,-1],
     }
   return(pred)
   }
+}
 ```
 
