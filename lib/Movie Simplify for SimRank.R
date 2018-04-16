@@ -1,9 +1,17 @@
+movie_train <- read.csv("movie_train.csv")
+movie_test <- read.csv("movie_test.csv")
 movie_user_train_simrank <- movie_train[1:100, 2:101]
 movie_user_test_simrank <- movie_test[1:100, 2:101]
 
 for (i in 1 : nrow(movie_user_train_simrank)){
   for (j in 1: ncol(movie_user_train_simrank)){
     movie_user_train_simrank[i,j] <- ifelse(movie_user_train_simrank[i,j] >= 4, 1, NA)
+  }
+}
+
+for (i in 1 : nrow(movie_user_test_simrank)){
+  for (j in 1: ncol(movie_user_test_simrank)){
+    movie_user_test_simrank[i,j] <- ifelse(movie_user_test_simrank[i,j] >= 4, 1, NA)
   }
 }
 
