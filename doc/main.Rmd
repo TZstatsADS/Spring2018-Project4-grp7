@@ -8,9 +8,10 @@ output: html_document
 # Memory-Based Algorithm
 
 ## Load Organized Data
-### We have already organized data before
+
+We have already organized data before
 ```{r}
-# # For organizing movie data code, you can check 'movie_organize.Rmd' in lib
+# You can check code in 'movie_organize.Rmd' in lib
 # movie_train <- read.csv("../data/movie_train.csv")
 # movie_test <- read.csv("../data/movie_test.csv")
 
