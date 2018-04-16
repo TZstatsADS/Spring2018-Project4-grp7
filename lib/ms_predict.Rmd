@@ -1,0 +1,30 @@
+---
+title: "predict"
+output: html_document
+---
+#ms predict
+```{r}
+ms_predict <- function(train = ms_train[,-1],
+                       test = ms_test[,-1],
+                       similarity = data,
+                       neighborhood = neighborhood){
+  pred <- matrix(NA,nrow = nrow(test),ncol = ncol(test))
+  avg <- apply(test,1,mean,na.rm = TRUE)
+  for(i in 1:nrow(pred)){
+    #predict for user i should be 'part1 + part2/part3'
+    pred.col <- which(!is.na(test[i,]))
+    part1 <- rep(avg[i], length(pred.col))
+    index <- neigh[[i]]
+    weight <- similarity[i,index]
+    others <- train[index,pred.col]
+    part2 <- t(as.matrix(weight)) %*% as.matrix(others)
+    if(length(index) == 0){
+      pred[i,pred.col] <- part1
+    }
+    else{
+      pred[i,pred.col] <- part1 + part2[1,]/sum(weight)
+    }
+    }
+  return(pred)
+  }
+```
