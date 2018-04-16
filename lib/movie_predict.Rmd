@@ -20,19 +20,19 @@ movie_predict <- function(train = movie_train[,-1],
     part1 <- rep(avg[i],length(pred.col))
   
     index <- neigh[[i]]
-    weight <- similarity[i,index]
-    part3 <- sum(weight)
-  
-    others <- train[index,pred.col]
-    others2 <- sweep(others,1,avg[index],'-') #this calculate user_i - his owen mean
-    others2[is.na(others2)] <- 0
-    part2 <- t(as.matrix(weight)) %*% as.matrix(others2)
     if(length(index) == 0){
       pred[i,pred.col] <- part1
     }
     else{
-      pred[i,pred.col] <- part1 + part2[1,]/part3
-    }
+          weight <- similarity[i,index]
+          part3 <- sum(weight)
+  
+          others <- train[index,pred.col]
+          others2 <- sweep(others,1,avg[index],'-') #this calculate user_i - his owen mean
+          others2[is.na(others2)] <- 0
+          part2 <- t(as.matrix(weight)) %*% as.matrix(others2)
+          #part2 <- as.matrix(weight) %*% as.matrix(others2)
+          pred[i,pred.col] <- part1 + part2[1,]/part3
     }
   return(pred)
   }
