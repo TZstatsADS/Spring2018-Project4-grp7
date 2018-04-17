@@ -17,12 +17,12 @@ We use Rank Score to evaluate MS data, MAE and ROC to evaluate Movie data. Here 
 	
 **Contribution statement**: 
 + Model-based Algorithm:
-+ Guo, Tao:
-+ Yu, Linna:
+     + Guo, Tao:
+     + Yu, Linna:
 + Memory-based Algorithm:
-+ Ding, Xueying:
-+ Fan, Xiaochen:
-+ Jiang, Chenfei:
+     + Ding, Xueying:
+     + Fan, Xiaochen:
+     + Jiang, Chenfei:
 
 Following [suggestions](http://nicercode.github.io/blog/2013-04-05-projects/) by [RICH FITZJOHN](http://nicercode.github.io/about/#Team) (@richfitz). This folder is orgarnized as follows.
 
