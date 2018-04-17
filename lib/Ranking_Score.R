@@ -2,7 +2,7 @@
 #Calculate the ranking score
 
 
-R<-function(predict,true,d=0.05,alpha=10){ # We ran a set of experiments using a halife of 10 items
+R<-function(predict,true,d=0,alpha=10){ # We ran a set of experiments using a halife of 10 items
                                         # and found little sensitivity of results.
   
   r<-rep(0,nrow(true))

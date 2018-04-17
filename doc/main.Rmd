@@ -11,6 +11,9 @@ output: html_document
 
 We have already organized data before
 ```{r}
+# You can check code in "MS_Organize.Rmd" in lib
+# ms_train <- read.csv("../data/ms_train.csv")
+# ms_test <- read.csv("../data/ms_test.csv")
 # You can check code in 'movie_organize.Rmd' in lib
 # movie_train <- read.csv("../data/movie_train.csv")
 # movie_test <- read.csv("../data/movie_test.csv")
@@ -28,6 +31,7 @@ Pearson Correlation & Vector Similarity & SimRank
 # You can check code in 'pearson_vector.Rmd' in lib
 # load("../output/weight/movie_train_pearson.RData")
 # load("../output/weight/movie_train_vector.RData")
+# For SimRank, due to the time cose of the calculating, we simplify the data into 100*100 dimension. You can check code in 'Movie Simplify for SimRank' and 'SimRank' in lib
 
  
 # MS
@@ -91,10 +95,96 @@ Pearson Correlation & Vector Similarity & SimRank
 
 
 # MS
-
+# #ms_pearson_threshold
+# neighborhood <- weight_thre(ms_train_pearson)
+# ms_pearson_threshold <- ms_predict(train = ms_train[,-1],
+#                       test = ms_test[,-1],
+#                      similarity = ms_train_pearson,
+#                      neighborhood = neighborhood)
+# save(ms_pearson_threshold,file = "ms_pearson_threshold.RData")
+# #ms_vector_threshold
+# neighborhood <- weight_thre(ms_train_vector)
+# ms_vector_threshold <- ms_predict(train = ms_train[,-1],
+#                      test = ms_test[,-1],
+#                      similarity = ms_train_vector,
+#                      neighborhood = neighborhood)
+# save(ms_vector_threshold,file = "ms_vector_threshold.RData")
+# #ms_pearson_bestn
+# neighborhood <- weight_bestn(ms_train_pearson)
+# ms_pearson_bestn <- ms_predict(train = ms_train[,-1],
+#                      test = ms_test[,-1],
+#                      similarity = ms_train_pearson,
+#                      neighborhood = neighborhood)
+# save(ms_pearson_bestn,file = "ms_pearson_bestn.RData")
+# #movie_vector_bestn
+# neighborhood <- weight_bestn(ms_train_vector)
+# ms_vector_bestn <- ms_predict(train = ms_train[,-1],
+#                      test = ms_test[,-1],
+#                      similarity = ms_train_vector,
+#                      neighborhood = neighborhood)
+# save(ms_vector_bestn,file = "ms_vector_bestn.RData")
+# #ms_pearson_comb
+# neighborhood <- weight_comb(ms_train_pearson)
+# ms_pearson_comb <- ms_predict(train = ms_train[,-1],
+#                      test = ms_test[,-1],
+#                      similarity = ms_train_pearson,
+#                      neighborhood = neighborhood)
+# save(ms_pearson_comb,file = "ms_pearson_comb.RData")
+# #movie_vector_comb
+# neighborhood <- weight_comb(ms_train_vector)
+# ms_vector_comb <- ms_predict(train = ms_train[,-1],
+#                      test = ms_test[,-1],
+#                      similarity = ms_train_vector,
+#                      neighborhood = neighborhood)
+# save(ms_vector_comb,file = "ms_vector_comb.RData")
 ```
 
-## Evaluation
+## Evaluation for MS
+```{r}
+R<-function(predict,true,d=0,alpha=10){
+  r<-rep(0,nrow(true))
+  r_max<-rep(0,nrow(true))
+  
+  for(a in 1:nrow(true)){
+    
+    r[a]<-sort(r[a],decreasing = T)
+    true[a,]<-sort(true[a,],decreasing = T)
+    
+    for(j in 1:ncol(true)){
+      
+      r[a]<-r[a]+max(predict[a,]-d,0)/2^((j-1)/(alpha-1))
+      r_max[a]<-r_max[a]+sum(max(true[a,]-d,0)/2^((j-1)/(alpha-1)))
+      
+    }
+  }
+  
+  rs<-100*sum(r)/sum(r_max)
+  return(rs)
+}
+
+# load("../output/memory_based_predict/ms/ms_pearson_bestn.RData")
+# load("../output/memory_based_predict/ms/ms_pearson_threhold.RData")
+# load("../output/memory_based_predict/ms/ms_pearson_comb.RData")
+# load("../output/memory_based_predict/ms/ms_vector_bestn.RData")
+# load("../output/memory_based_predict/ms/ms_vector_threhold.RData")
+# load("../output/memory_based_predict/ms/ms_vector_comb.RData")
+
+# R_ms_pearson_bestn <- R(ms_pearson_bestn, ms_test, 0, 10)
+# R_ms_pearson_bestn
+# R_ms_pearson_threhold <- R(ms_pearson_threhold, ms_test, 0, 10)
+# R_ms_pearson_threhold
+# R_ms_pearson_comb <- R(ms_pearson_comb, ms_test, 0, 10)
+# R_ms_pearson_comb
+# R_ms_vector_bestn <- R(ms_vector_bestn, ms_test, 0, 10)
+# R_ms_vector_bestn
+# R_ms_vector_threhold <- R(ms_vector_threhold, ms_test, 0, 10)
+# R_ms_vector_threhold
+# R_ms_vector_comb <- R(ms_vector_comb, ms_test, 0, 10)
+# R_ms_vector_comb
+```
+
+
+## Evaluation for Movie
 ```{r}
 ## evaluation
 
