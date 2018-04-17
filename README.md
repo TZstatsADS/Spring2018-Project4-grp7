@@ -4,17 +4,25 @@
 
 Term: Spring 2018
 
-+ Team #
-+ Projec title: Lorem ipsum dolor sit amet
++ Team 7
++ Projec title: Collaborative Filtering
 + Team members
-	+ team member 1
-	+ team member 2
-	+ team member 3
-	+ team member 4
-	+ team member 5
-+ Project summary: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+	+ Ding, Xueying xd2196@columbia.edu
+	+ Fan, Xiaochen xf2170@columbia.edu
+	+ Guo, Tao tg2620@columbia.edu
+	+ Jiang, Chenfei cj2526@columbia.edu
+	+ Yu, Linna ly2424@columbia.edu
++ Project summary: In this project, we applied memory-based algorithm and model-based algorithm to do collaborative filtering. For memory-based algorithm, first we use pearson correlation, vector similarity and simrank(only for Movie data) to gain similarity weight, then we use weight threshold, best-n-estimator and combined to select neighborhoods, finally we predict based above elements. For model-based algorithm,..........
+We use Rank Score to evaluate MS data, MAE and ROC to evaluate Movie data. Here are our results.
 	
-**Contribution statement**: ([default](doc/a_note_on_contributions.md)) All team members contributed equally in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement. 
+**Contribution statement**: 
+Model-based Algorithm:
+Guo, Tao:
+Yu, Linna:
+Memory-based Algorithm:
+Ding, Xueying:
+Fan, Xiaochen:
+Jiang, Chenfei:
 
 Following [suggestions](http://nicercode.github.io/blog/2013-04-05-projects/) by [RICH FITZJOHN](http://nicercode.github.io/about/#Team) (@richfitz). This folder is orgarnized as follows.
 
