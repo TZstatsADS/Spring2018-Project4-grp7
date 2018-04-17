@@ -296,3 +296,220 @@ curve(pred_sim_cb,test_v_1,idx1)
 
 
 # Model-Based Algorithm
+---
+title: "Untitled"
+output: html_document
+---
+
+# Load processed datasets
+```{r}
+load("../data/MS_sample/train1.RData")
+load("../data/MS_sample/test1.RData")
+```
+
+# Model-based Algorithm
+
+### EM algorithm 
+
+We implement cluster model to make predictions about ratings. In the model-based algorithm, the ratings each user gives to a specific item is a random variable.  We use Bayesian Mixture to model this random variable by incorporating the information from the available ratings. We assume that each user belongs to a cluster c, where the number of clusters is determined by cross validation. 
+
+EM-algorithm is used to iteratively update the "soft assignment" - the probability that each user belongs to a specific cluster, and the parameters - the relative cluster size and the probability that user i gives item j a rating of k given that user i belongs to cluster c.
+
+Here is the EM-algorithm part:
+
+```{r}
+
+N <- dim(train1)[1]
+D <- dim(train1)[2]
+N2 <- dim(test1)[1]
+
+I_1 = list() # list of papers voted 1 by each user 
+I_1[[1]] = as.numeric(unlist(which(train1[1,] == 1)))
+for (i in 2:N) {
+  k = as.numeric(unlist(which(train1[i,] == 1)))
+  I_1 = c(I_1,list(k))
+}
+
+I_0 = list() # list of papers voted 0 by each user 
+I_0[[1]] = as.numeric(unlist(which(train1[1,] == 0)))
+for (i in 2:N) {
+  k = as.numeric(unlist(which(train1[i,] == 0)))
+  I_0 = c(I_0,list(k))
+}
+
+J_1 = list() # list of users who vote 1 each paper
+J_1[[1]] = as.numeric(unlist(which(train1[,1] == 1)))
+for (i in 2:D) {
+  k = as.numeric(unlist(which(train1[,i] == 1)))
+  J_1 = c(J_1,list(k))
+}
+
+J_0 = list() # list of users who vote 0 each paper
+J_0[[1]] = as.numeric(unlist(which(train1[,1] == 0)))
+for (i in 2:D) {
+  k = as.numeric(unlist(which(train1[,i] == 0)))
+  J_0 = c(J_0,list(k))
+}
+
+multinomialEM <- function(data, C, t = 1*10^-6){
+  change_1 <- 1 # Measures change in centroids
+  change_0 <- 1
+  #cp <- matrix(1/C, nrow = N, ncol = C)
+  cp <- runif(C)
+  cp = cp/sum(cp)
+  gamma_1 = matrix(runif(C*D), nrow = C, ncol = D)
+  gamma_0 = 1-gamma_1
+  A <- matrix (0, N, C) # responsibilities pi
+  Phi <- matrix(0, N, C)
+
+  while(change_1 > t | change_0 > t){
+    # E step
+    for (k in 1:C) {
+      for (i in 1:N) {
+        Phi[i,k] = prod(gamma_0[k,I_0[[i]]]) * prod(gamma_1[k,I_1[[i]]]) * cp[k]
+      }
+    }
+    
+    A<-Phi/rowSums(Phi)
+    
+    #for (i in 1:N) {
+    #  A[i, ] <- Phi[i, ]/sum(Phi[i, ]) # responsibilities pi
+    #}
+    
+    # M step
+ 
+    cp = colSums(A)/N
+    
+    
+    gamma_1_old = gamma_1
+    gamma_0_old = gamma_0
+    
+    for (k in 1:C) {
+      for (j in 1:D) {
+        gamma_1[k,j] = sum(A[J_1[[j]],k])/sum(A[,k])
+        gamma_0[k,j] = sum(A[J_0[[j]],k])/sum(A[,k])
+      }
+    }
+    
+    change_1 = norm(gamma_1_old - gamma_1, type = "O")
+    change_0 = norm(gamma_0_old - gamma_0, type = "O")
+  }
+  return(result = list(cp, gamma_1, gamma_0, A))
+
+}
+
+```
+
+### Predict after training
+```{r}
+# Prediction
+predictCF <- function(data_test = test1, param){
+  B = list() # list of papers needed to predict from each user
+  B[[1]] = as.numeric(unlist(which(data_test[1,] == 1)))
+  for (i in 2:N2) {
+    k = as.numeric((which(data_test[i,] == 1)))
+    B = c(B,list(k))
+  }
+
+  gamma1 = param[[2]]
+  A = param[[4]]
+  expect.mat = matrix(0, ncol = ncol(data_test), nrow = nrow(data_test))
+  colnames(expect.mat) = colnames(data_test)
+  for (i in 1:length(B)) {
+    for (j in 1:length(B[[i]])) {
+      if(length(B[[i]]) == 0){
+        expect.mat[i,B[[i]][j]] = NA
+    }
+      else{
+        expect.mat[i,B[[i]][j]] = (A[i,] %*% gamma1[,B[[i]]])[j]
+    }
+
+   }
+ }
+
+  return(expect.mat)
+}
+
+```
+
+### Use CV to pick the best cluster number and use ranked scoring for evaluation
+```{r}
+# Separate the training data into two parts--training set and validation set
+  
+   training_data = train1
+   validation_data = matrix(0,nrow = nrow(train1), ncol = ncol(train1))
+   rownames(validation_data)<-rownames(training_data)
+   colnames(validation_data)<-colnames(training_data)
+   set.seed(2249)
+   index<-c()
+   
+    for (i in 1:nrow(training_data)) {
+      
+      index<-as.numeric(unlist(which(train1[i,] == 1)))
+      v_index <- sample(index, round(length(index) * 0.25))
+      training_data[i,v_index]<-0
+      validation_data[i,v_index]<-1
+      
+    }
+
+# Caculate the accuracy rate using ranked scoring
+   
+R<-function(predict,true,d=0.05,alpha=10){ # We ran a set of experiments using a halife of 10 items
+                                        # and found little sensitivity of results.
+  
+  r<-rep(0,nrow(true))
+  r_max<-rep(0,nrow(true))
+  
+  for(a in 1:nrow(true)){
+    
+    r[a]<-sort(r[a],decreasing = T)
+    true[a,]<-sort(true[a,],decreasing = T)
+    
+    for(j in 1:ncol(true)){
+      
+      r[a]<-r[a]+max(predict[a,]-d,0)/2^((j-1)/(alpha-1))
+      r_max[a]<-r_max[a]+sum(max(true[a,]-d,0)/2^((j-1)/(alpha-1)))
+      
+    }
+  }
+  
+  rs<-100*sum(r)/sum(r_max)
+  return(rs)
+}
+
+# Choose the best cluster number
+nC = 10:25 
+
+cv.accuracy<- c()
+for (i in 1:length(nC)) {
+ 
+  coef = multinomialEM(training_data, nC[i])
+  EM_predict = predictCF(validation_data, coef)
+  cv.accuracy[i] <- R(EM_predict,validation_data,d=0.05,alpha=10)
+  
+  }
+
+cluster <- data.frame(nC,cv.accuracy)
+ggplot(cluster, aes(x=nC, y=cv.accuracy)) + geom_line(col = 'red') +geom_point( size=4, shape=21, fill="white") +labs( x = 'Cluster Number',y = 'Rank Score')+ ggtitle('RANK SCORE FOR CLUSTER MODEL')
+
+
+```
+
+### Use the best parameter to calculate the accuracy
+```{r}
+# Test Error
+best.C = 24
+best.coef <- multinomialEM(train1, C = best.C)
+best.pred <- predictCF(test1, best.coef)
+accuracy1 <-sum(best.pred)/sum(test1)  
+#C=14 0.20367 
+#C=24 0.2044247
+accuracy2<-R(best.pred,test1,d=0,alpha=10)
+#C=24 39.33172
+#C=14 38.6151
+
+```
+
+
+
+

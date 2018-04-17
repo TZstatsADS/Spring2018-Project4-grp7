@@ -6,7 +6,7 @@ output: html_document
 # Load processed datasets
 ```{r}
 load("../data/MS_sample/train1.RData")
-load("..data/MS_sample/test1.RData")
+load("../data/MS_sample/test1.RData")
 ```
 
 # Model-based Algorithm
