@@ -15,6 +15,8 @@ Term: Spring 2018
 + Project summary: In this project, we applied memory-based algorithm and model-based algorithm to do collaborative filtering. For memory-based algorithm, first we use pearson correlation, vector similarity and simrank(only for Movie data) to gain similarity weight, then we use weight threshold, best-n-estimator and combined to select neighborhoods, finally we predict based above elements. For model-based algorithm,..........
 We use Rank Score to evaluate MS data, MAE and ROC to evaluate Movie data. Here are our results.
 	
+
+	
 **Contribution statement**: 
 + Model-based Algorithm:
      + Guo, Tao:
