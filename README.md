@@ -13,10 +13,13 @@ Term: Spring 2018
 	+ Jiang, Chenfei cj2526@columbia.edu
 	+ Yu, Linna ly2424@columbia.edu
 + Project summary: In this project, we applied memory-based algorithm and model-based algorithm to do collaborative filtering. For memory-based algorithm, first we use pearson correlation, vector similarity and simrank(only for Movie data) to gain similarity weight, then we use weight threshold, best-n-estimator and combined to select neighborhoods, finally we predict based above elements. For model-based algorithm,..........
-We use Rank Score to evaluate MS data, MAE and ROC to evaluate Movie data. Here are our results.
+We use Rank Score to evaluate MS data, MAE and ROC to evaluate Movie data. Here are our results. Red parts mean the best.
 + MS
+
 ![screenshot](figs/MS_evaluation.png)
+
 + Movie
+
 ![screenshot](figs/Movie_evaluation.png)
 
 	
