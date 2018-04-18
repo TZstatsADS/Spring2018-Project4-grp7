@@ -32,7 +32,7 @@ We use Rank Score to evaluate MS data, MAE and ROC to evaluate Movie data. Here 
 
 + Memory-based Algorithm:
      + Ding, Xueying:
-     + Fan, Xiaochen:
+     + Fan, Xiaochen: Process the MS-data into matrix that can be used to calculate the similarity; Predict the MS-data and calculate the ranking score of each combination; Write the SimRank function of Moive _data.
      + Jiang, Chenfei:
 
 Following [suggestions](http://nicercode.github.io/blog/2013-04-05-projects/) by [RICH FITZJOHN](http://nicercode.github.io/about/#Team) (@richfitz). This folder is orgarnized as follows.
