@@ -188,33 +188,33 @@ R<-function(predict,true,d=0,alpha=10){
 ```{r}
 options(warn = -1)
 
-# load data
-setwd("~/GitHub/Spring2018-Project4-grp7/data")
-test <- read.csv("movie_test.csv")
-test <- test[,-1]
-test2 <- test[1:100,]
+# # load data
+# setwd("~/GitHub/Spring2018-Project4-grp7/data")
+# test <- read.csv("movie_test.csv")
+# test <- test[,-1]
+# test2 <- test[1:100,]
 
-setwd("~/GitHub/Spring2018-Project4-grp7/output/memory_based_predict/movie")
-load("movie_pearson_threshold.Rdata")
-pred_pear_thr <- movie_pearson_threshold
-load("movie_vector_threshold.Rdata")
-pred_vec_thr <- movie_vector_threshold
-load("movie_simrank_threshold.Rdata")
-pred_sim_thr <- movie_simrank_threshold
+# setwd("~/GitHub/Spring2018-Project4-grp7/output/memory_based_predict/movie")
+# load("movie_pearson_threshold.Rdata")
+# pred_pear_thr <- movie_pearson_threshold
+# load("movie_vector_threshold.Rdata")
+# pred_vec_thr <- movie_vector_threshold
+# load("movie_simrank_threshold.Rdata")
+# pred_sim_thr <- movie_simrank_threshold
 
-load("movie_pearson_bestn.Rdata")
-pred_pear_bn <- movie_pearson_bestn
-load("movie_vector_bestn.Rdata")
-pred_vec_bn <- movie_vector_bestn
-load("movie_simrank_bestn.Rdata")
-pred_sim_bn <- movie_simrank_bestn
+# load("movie_pearson_bestn.Rdata")
+# pred_pear_bn <- movie_pearson_bestn
+# load("movie_vector_bestn.Rdata")
+# pred_vec_bn <- movie_vector_bestn
+# load("movie_simrank_bestn.Rdata")
+# pred_sim_bn <- movie_simrank_bestn
 
-load("movie_pearson_comb.Rdata")
-pred_pear_cb <- movie_pearson_comb
-load("movie_vector_comb.Rdata")
-pred_vec_cb <- movie_vector_comb
-load("movie_simrank_comb.Rdata")
-pred_sim_cb <- movie_simrank_comb
+# load("movie_pearson_comb.Rdata")
+# pred_pear_cb <- movie_pearson_comb
+# load("movie_vector_comb.Rdata")
+# pred_vec_cb <- movie_vector_comb
+# load("movie_simrank_comb.Rdata")
+# pred_sim_cb <- movie_simrank_comb
 
 
 ## MAE
