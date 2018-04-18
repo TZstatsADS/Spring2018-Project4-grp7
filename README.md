@@ -27,7 +27,8 @@ We use Rank Score to evaluate MS data, MAE and ROC to evaluate Movie data. Here 
 + Model-based Algorithm: 
   [Implementation of cluster model, optimization of cluster model parameters.]
      + Guo, Tao: Completing the Model-based Alogorithm with Linna Yu. We improve the algorithrm, train the data, come up with the best number of clusters. Calculating the rank score and compared with memory-based algorithm.
-     + Yu, Linna: Completing the Model-based Alogorithm with Tao Guo. We improve the algorithrm, train the data, come up with the best number of clusters. Calculating the rank score and compared with memory-based algorithm. 
+     
+     + Yu, Linna: Completing the Model-based Alogorithm with Tao Guo. We improve the algorithrm, train the data, come up with the best number of clusters. Calculating the rank score and compared with memory-based algorithm. 
 
 + Memory-based Algorithm:
      + Ding, Xueying:
