@@ -1,4 +1,4 @@
-# Project 4: Collaborative Filtering
+﻿# Project 4: Collaborative Filtering
 
 ### [Project Description](doc/project4_desc.md)
 
@@ -33,7 +33,7 @@ We use Rank Score to evaluate MS data, MAE and ROC to evaluate Movie data. Here 
 + Memory-based Algorithm:
      + Ding, Xueying: Process the Movie-data into matrix that can be used to calculate the similarity; Write function to gain pearson correlation and vector similarity and apply it on MS-data and Movie-data; Write fucntion to select neighbor and apply it on Movie-data; Write function to predict and apply it on movie data.   
      + Fan, Xiaochen: Process the MS-data into matrix that can be used to calculate the similarity; Predict the MS-data and calculate the ranking score of each combination; Write the SimRank function of Moive _data.   
-     + Jiang, Chenfei:
+     + Jiang, Chenfei: Write the SimRank function of Movie data. Write the MAE and ROC function to evaluate the performance of different methods.
 
 Following [suggestions](http://nicercode.github.io/blog/2013-04-05-projects/) by [RICH FITZJOHN](http://nicercode.github.io/about/#Team) (@richfitz). This folder is orgarnized as follows.
 

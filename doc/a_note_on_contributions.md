@@ -9,12 +9,14 @@ Post your title, team members, project abstract and a contribution statement in 
 Below is an example. If no contribution statement is provided, we will insert a default statement that goes "**All team members contributed equally in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement**. "
 
 ---
-Sample project README statement.
+ **Contribution statement**: 
++ Model-based Algorithm: 
+  [Implementation of cluster model, optimization of cluster model parameters.]
+     + Guo, Tao: Completing the Model-based Alogorithm with Linna Yu. We improve the algorithrm, train the data, come up with the best number of clusters. Calculating the rank score and compared with memory-based algorithm.
+ ? ? 
+     + Yu, Linna: Completing the Model-based Alogorithm with Tao Guo. We improve the algorithrm, train the data, come up with the best number of clusters. Calculating the rank score and compared with memory-based algorithm. 
 
-Project xxx
-
-Team members: Avi Bond, Comma Deed, En Funn, Gem Hon
-
-Summary: In this project, we developed a new method and improved the classification accuracy for images of cats and dogs to 99.9%
-
-[Contribution Statement] AB, CD, EF and GH designed the study. AB and CD developed baseline classification model for evaluation. EF and GH explored feature engineering for improving the baseline model. AB, EF and GH discussed and designed the model evaluation protocol. CD carried out the computation for model evaluation. All team members contributed to the GitHub repository and prepared the presentation. All team members approve our work presented in our GitHub repository including this contribution statement.
++ Memory-based Algorithm:
+     + Ding, Xueying: Process the Movie-data into matrix that can be used to calculate the similarity; Write function to gain pearson correlation and vector similarity and apply it on MS-data and Movie-data; Write fucntion to select neighbor and apply it on Movie-data; Write function to predict and apply it on movie data.   
+     + Fan, Xiaochen: Process the MS-data into matrix that can be used to calculate the similarity; Predict the MS-data and calculate the ranking score of each combination; Write the SimRank function of Moive _data.   
+     + Jiang, Chenfei: Write the SimRank function of Movie data. Write the MAE and ROC function to evaluate the performance of different methods.
